@@ -1,9 +1,14 @@
-FROM python:3.9
-RUN pip install back4app Flask tensorflow numpy pandas scikit-learn
+# Use the official Python image as the base image
+FROM python:3.8
+
+# Set the working directory in the container
 WORKDIR /app
-COPY app.py /app
-COPY model.pkl /app
-EXPOSE 5000
-CMD ["python", "app.py"]
-docker build -t my_ml_app.
-docker run -p 5000:5000 my_ml_app
+
+# Copy the application files into the working directory
+COPY . /app
+
+# Install the application dependencies
+RUN pip install -r requirements.txt
+
+# Define the entry point for the container
+CMD ["flask", "run", "--host=0.0.0.0"]
